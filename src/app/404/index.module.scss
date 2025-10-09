@@ -1,0 +1,13 @@
+.page {
+    .flex {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+	.image {
+		@media #{$mq-md-max} {
+			display: none;
+		}
+	}
+}

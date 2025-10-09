@@ -1,0 +1,515 @@
+.form {
+	&:global {
+		&.is-sending {
+			pointer-events: none;
+
+			button[type='submit'] {
+				.button__text {
+					opacity: 0;
+				}
+
+				.button__loading {
+					opacity: 1;
+				}
+			}
+		}
+	}
+
+	.globalError {
+		display: block;
+		margin-block-start: 1rem;
+
+		@media #{$mq-sm-min} {
+			margin-block-start: 1.5rem;
+		}
+	}
+}
+
+.formLine {
+	position: relative;
+	display: block;
+	width: 100%;
+	margin-bottom: 1rem;
+
+	@media #{$mq-sm-min} {
+		margin-bottom: 1.5rem;
+	}
+
+	&.noMargin {
+		margin-bottom: 0;
+	}
+
+	&.error {
+		color: $red;
+
+		.lineWrapper {
+			.input {
+				border-color: $red;
+
+				&:focus-visible {
+					outline-color: rgba($red, 0.25);
+				}
+
+				&::placeholder {
+					color: $red;
+				}
+			}
+		}
+
+		.uploadWrapper {
+			.uploadText {
+				border-color: $red !important;
+
+				&:focus-visible {
+					outline-color: rgba($red, 0.25) !important;
+				}
+
+				.placeholder {
+					color: $red;
+				}
+			}
+		}
+	}
+
+	&:has(.label[data-shrink='false']) .lineWrapper .input.select {
+		color: currentColor;
+		-webkit-text-fill-color: currentColor;
+	}
+
+	&:has(.lineWrapper .input.select) .label {
+		transform: translate(.75rem, 1.1rem);
+
+		@media #{$mq-xl-min} {
+			transform: translate(.75rem, .975rem);
+		}
+	}
+
+	&:has(.lineWrapper .input.select:focus) .label {
+		transform: translate(0.625rem, -0.5rem) !important;
+		background-color: $white;
+		font-size: 0.675rem;
+	}
+
+	&.isWhite {
+		&:has(.label[data-shrink='false']) .lineWrapper .input.select {
+			-webkit-text-fill-color: $white;
+		}
+
+		&:has(.lineWrapper .input.select:focus) .label {
+			background-color: $gray-darker;
+		}
+
+		.label {
+			&[data-shrink='false'] {
+				background-color: $gray-darker;
+			}
+		}
+
+		.lineWrapper {
+			.input {
+				-webkit-box-shadow: 0 0 0 99rem $gray-darker inset;
+				color: $white;
+				-webkit-text-fill-color: $white;
+				caret-color: $white;
+
+				&.select {
+					&:focus {
+						color: currentColor;
+						-webkit-text-fill-color: $white;
+					}
+				}
+			}
+		}
+	}
+
+	.label {
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 2;
+		transform: translate(0.75rem, 1.2rem);
+		padding-right: 0.5rem;
+		padding-left: 0.25rem;
+		transition: 0.2s ease-in-out;
+		pointer-events: none;
+		color: currentColor;
+
+		@media #{$mq-xl-min} {
+			transform: translate(0.75rem, 1.1rem);
+		}
+
+		&[data-shrink='false'] {
+			transform: translate(0.625rem, -0.5rem) !important;
+			background-color: $white;
+			font-size: 0.675rem;
+		}
+	}
+
+	.lineWrapper {
+		position: relative;
+
+		&.uploadWrapper {
+			&[data-has-files='true'] {
+				.uploadText {
+					.uploadedFiles {
+						display: flex;
+					}
+
+					.placeholder {
+						display: none;
+					}
+				}
+
+				.button {
+					opacity: 0;
+					visibility: hidden;
+				}
+			}
+
+			.input {
+				position: absolute;
+				opacity: 0;
+				top: 0;
+				left: 0;
+
+				&:focus-visible {
+					+ .uploadText {
+						outline: 0.1rem solid rgba(blue, 0.25);
+					}
+				}
+			}
+
+			.uploadText {
+				position: relative;
+				z-index: 0;
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.25rem;
+				width: 100%;
+				border: 1px solid $gray-light;
+				background-color: transparent;
+				border-radius: 0.275rem;
+				color: $gray-dark;
+				padding: 1rem 0.75rem;
+				-webkit-box-shadow: 0 0 0 99rem $white inset;
+				transition: color 0.3s ease-in-out;
+				text-overflow: ellipsis;
+				cursor: pointer;
+
+				@media #{$mq-xl-min} {
+					font-size: 0.8rem;
+				}
+
+				.placeholder {
+					cursor: pointer;
+					padding-right: 3.5rem;
+
+					@media #{$mq-md-min} {
+						padding-right: 9rem;
+					}
+				}
+
+				.uploadedFiles {
+					display: none;
+					padding: 0.25rem 0.5rem;
+					background-color: $gray-dark;
+					align-items: center;
+					justify-content: flex-start;
+					color: $white;
+					border-radius: 0.125rem;
+					width: fit-content;
+					gap: 0.5rem;
+					transition: 0.2s ease-in-out;
+					text-align: left;
+
+					&:hover,
+					&:focus-visible {
+						background-color: $gray-darkest;
+					}
+
+					svg {
+						width: 0.5rem;
+						min-width: 0.5rem;
+						height: 0.5rem;
+					}
+				}
+			}
+
+			.button {
+				position: absolute;
+				z-index: 2;
+				top: 50%;
+				transform: translateY(-50%);
+				right: 0.25rem;
+				padding: 0 1rem;
+				font-size: 0.8rem;
+				height: calc(100% - 0.5rem);
+
+				@media #{$mq-md-min} {
+					padding: 0 2rem;
+				}
+
+				span {
+					@media #{$mq-md-max} {
+						display: none;
+					}
+				}
+
+				svg {
+					@media #{$mq-md-min} {
+						display: none;
+					}
+				}
+			}
+		}
+
+		&:has(select) .sideIcon {
+			pointer-events: none;
+			min-width: 0.675rem;
+			width: 0.675rem;
+			height: 0.675rem;
+		}
+
+		.input {
+			display: block;
+			width: 100%;
+			border: 1px solid $gray-light;
+			background-color: transparent;
+			border-radius: 0.275rem;
+			color: $gray-dark;
+			padding: 1.25rem 0.75rem;
+			-webkit-box-shadow: 0 0 0 99rem $white inset;
+			transition: color 0.3s ease-in-out;
+			text-overflow: ellipsis;
+
+			@media #{$mq-xl-min} {
+				font-size: 0.8rem;
+			}
+
+			&:focus-visible {
+				outline: 0.1rem solid rgba(blue, 0.25);
+
+				&::placeholder {
+					opacity: 0.675;
+				}
+			}
+
+			&::placeholder {
+				color: currentColor;
+				opacity: 0;
+			}
+
+			&.select {
+				cursor: pointer;
+				padding: 1.1222222rem 0.75rem;
+				color: transparent;
+				-webkit-text-fill-color: transparent;
+
+				&:focus-visible {
+					color: currentColor;
+					-webkit-text-fill-color: currentColor;
+				}
+
+				&::-webkit-outer-spin-button,
+				&::-webkit-inner-spin-button {
+					-webkit-appearance: none;
+					margin: 0;
+				}
+			}
+
+			&.textarea {
+				min-height: 8rem;
+				height: 8rem;
+				resize: vertical;
+			}
+
+			&:-webkit-autofill,
+			&:-webkit-autofill:hover,
+			&:-webkit-autofill:focus,
+			&:-webkit-autofill:active {
+				transition: background-color 0s ease-in-out 999999s;
+			}
+		}
+
+		.sideIcon {
+			position: absolute;
+			z-index: 2;
+			top: 50%;
+			transform: translateY(-50%);
+			right: 1rem;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			min-width: 1rem;
+			width: 1rem;
+			height: 1rem;
+			color: currentColor;
+
+			&:focus-visible {
+				outline: 0.1rem solid currentColor;
+			}
+
+			svg {
+				width: 100%;
+				height: 100%;
+			}
+		}
+	}
+
+	.errorMsg {
+		position: absolute;
+		z-index: 2;
+		bottom: -0.4rem;
+		right: 0.75rem;
+		background-color: $red;
+		color: $white;
+		line-height: 1;
+		padding: 0.1rem 0.3rem;
+		border-radius: 0.1rem;
+		font-size: 0.6rem;
+
+		@media #{$mq-3xl-min} {
+			font-size: 0.575rem;
+		}
+	}
+
+	&:has(.uploadWrapper) {
+		.errorMsg {
+			left: 0.75rem;
+			right: auto;
+		}
+	}
+}
+
+.errorMsgCheckbox {
+	position: absolute;
+	z-index: 2;
+	bottom: -0.4rem;
+	left: 1rem;
+	background-color: $red;
+	color: $white;
+	line-height: 1;
+	padding: 0.1rem 0.3rem;
+	border-radius: 0.1rem;
+	font-size: 0.6rem;
+
+	@media #{$mq-3xl-min} {
+		font-size: 0.575rem;
+	}
+}
+
+.radioWrapper {
+	position: relative;
+	display: block;
+	margin-bottom: 1rem;
+
+	&.noMargin {
+		margin-bottom: 0;
+	}
+
+	&[data-error='true'] {
+		color: $red;
+
+		.radioWrapperInner {
+			.radioBox {
+				border-color: $red;
+
+				&:focus-visible {
+					outline-color: rgba($red, 0.25);
+				}
+
+				&::placeholder {
+					color: $red;
+				}
+			}
+		}
+	}
+
+	&:has(.checkbox:focus-visible) .radioWrapperInner .radioBox {
+		outline: 0.1rem solid rgba(blue, 0.25);
+	}
+
+	&.isWhite {
+	}
+
+	.checkbox {
+		position: absolute;
+		z-index: -99;
+		opacity: 0;
+
+		&:checked {
+			+ .radioWrapperInner {
+				.radioBox {
+					background-color: $black;
+
+					svg {
+						opacity: 1;
+					}
+				}
+			}
+		}
+	}
+
+	.radioWrapperInner {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		cursor: pointer;
+
+		.radioBox {
+			position: relative;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 1.325rem;
+			min-width: 1.325rem;
+			height: 1.325rem;
+			padding: 0.25rem;
+			border: 1px solid $gray-light;
+			border-radius: 0.225rem;
+
+			svg {
+				opacity: 0;
+				width: 100%;
+				color: $white;
+			}
+		}
+
+		.radioText {
+			line-height: 1.1;
+		}
+	}
+}
+
+@keyframes autofill {
+	100% {
+		background: transparent !important;
+		color: inherit;
+	}
+}
+
+.popup {
+    display: none;
+    text-align: center;
+    width: 40rem;
+    max-width: calc(100% - 2rem);
+    
+    > div {
+        padding: 1rem 0;
+
+        p {
+            display: block;
+            margin: var(--smallest) 0 var(--smaller) 0;
+
+            @media #{$mq-md-min} {
+                margin: calc(var(--smallest) / 1.5) 0;
+            }
+        }
+
+        button {
+            width: 10rem;
+            margin: auto;
+        }
+    }
+}

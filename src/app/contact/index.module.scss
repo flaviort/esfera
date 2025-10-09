@@ -1,0 +1,40 @@
+.page {
+	.formSection {
+		.flex {
+			display: flex;
+			flex-direction: column;
+			gap: 1.5rem;
+		}
+
+		.form {
+			.bottom {
+				display: flex;
+				align-items: flex-start;
+				justify-content: space-between;
+				flex-direction: column;
+				gap: .5rem;
+
+				@media #{$mq-sm-min} {
+					flex-direction: row;
+					gap: 1.5rem;
+				}
+
+				@media #{$mq-md-min} {
+					flex-direction: column;
+					gap: .5rem;
+				}
+
+				@media #{$mq-xl-min} {
+					flex-direction: row;
+					gap: 1.5rem;
+				}
+
+				.left {
+					a {
+						color: $pink;
+					}
+				}
+			}
+		}
+	}
+}
