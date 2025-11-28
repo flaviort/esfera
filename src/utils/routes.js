@@ -9,12 +9,13 @@ export const pages = {
 
 	// regular pages
 	about: '/sobre',
+	services: '/sobre#servicos',
 	portfolio: '/portfolio',
 	portfolio_inner: '/portfolio/inner',
 	contact: '/contato',
 
 	// privacy
-	privacy: '/privacy-policy',
+	privacy: '/politica-de-privacidade',
 
 	// others
 	error: '/404'

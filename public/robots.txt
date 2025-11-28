@@ -5,7 +5,7 @@ Disallow: /404
 Disallow: /500
 
 # Host
-Host: https://purekana.com
+Host: https://agenciaesfera.com.br
 
 # Sitemaps
-Sitemap: https://purekana.com/sitemap.xml
+Sitemap: https://agenciaesfera.com.br/sitemap.xml

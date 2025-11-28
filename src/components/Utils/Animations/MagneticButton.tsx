@@ -1,6 +1,7 @@
 'use client'
 
 // libraries
+import clsx from 'clsx'
 import { useRef, useEffect } from 'react'
 import { gsap, Power4, Elastic } from 'gsap/dist/gsap'
 
@@ -14,7 +15,7 @@ interface MagneticButtonProps {
 export default function MagneticButton({
     className,
     children,
-    strength = 50
+    strength = 30
 }: MagneticButtonProps) {
     
     const buttonRef = useRef<HTMLDivElement>(null)
@@ -96,8 +97,7 @@ export default function MagneticButton({
     return (
         <div
             ref={buttonRef}
-            style={{ width: 'fit-content'}}
-            className={className}
+            className={clsx('w-fit', className)}
             data-magnetic
         >
             {children}

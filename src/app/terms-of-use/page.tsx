@@ -4,15 +4,15 @@
 import banner from '@/assets/img/banners/technology.jpg'
 
 export const metadata = {
-	title: 'Terms of Use | PureKana',
-	description: 'Terms of Use for PureKana'
+	title: 'Termos de Uso | Agência Esfera',
+	description: 'Termos de Uso da Agência Esfera'
 }
 
 export default function TermsOfUse() {
 	return (
-		<main className='pb-medium'>
+		<main className=''>
 
-			Terms of Use
+			Termos de Uso
 
 			<section>
 				<div className='container'>

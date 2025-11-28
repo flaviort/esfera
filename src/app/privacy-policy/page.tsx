@@ -4,15 +4,15 @@
 import banner from '@/assets/img/banners/technology.jpg'
 
 export const metadata = {
-	title: 'Privacy Policy | PureKana',
-	description: 'Privacy Policy for PureKana'
+	title: 'Política de Privacidade | Agência Esfera',
+	description: 'Política de Privacidade da Agência Esfera'
 }
 
 export default function PrivacyPolicy() {
 	return (
-		<main className='pb-medium'>
+		<main className=''>
 
-			Privacy Policy
+			Política de Privacidade
 
 			<section>
 				<div className='container'>

@@ -5,45 +5,51 @@ import { gsap } from 'gsap/dist/gsap'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
 
-// Register plugins only when needed
-if (typeof window !== 'undefined') {
-	gsap.registerPlugin(ScrollTrigger)
-}
+gsap.registerPlugin(ScrollTrigger)
 
 interface CounterProps {
 	number: number
+	className?: string
 }
 
-export default function Counter({ number }: CounterProps) {
+export default function Counter({ number, className }: CounterProps) {
 	const item = useRef<HTMLSpanElement>(null)
 
 	useGSAP(() => {
 		if (item.current) {
-			// animated counter
-			;(gsap.utils.toArray(item.current) as HTMLElement[]).forEach(
-				(item) => {
-					gsap.from(item, {
-						textContent: '0',
-						duration: 3,
-						ease: 'power2.inOut',
-						modifiers: {
-							textContent: (value) => formatNumber(value)
-						},
-						scrollTrigger: {
-							trigger: item,
-							start: 'top 90%',
-							toggleActions: 'play none none none'
-						}
-					})
+
+			// format the number in Brazilian standard (e.g., 1.000, 10.000)
+			function formatBrazilianNumber(value: number | string) {
+				return Math.floor(+value).toLocaleString('pt-BR')
+			}
+
+			gsap.fromTo(item.current, 
+				{
+					textContent: 0
+				},
+				{
+					textContent: number,
+					duration: 3,
+					ease: 'power2.inOut',
+					modifiers: {
+						textContent: (value) => formatBrazilianNumber(value)
+					},
+					scrollTrigger: {
+						trigger: item.current,
+						start: 'top 90%',
+						toggleActions: 'play none none none'
+					}
 				}
 			)
-
-			// format the number in US standard
-			function formatNumber(value: number) {
-				return Math.floor(+value)
-			}
 		}
-	})
+	}, { dependencies: [number] })
 
-	return <span ref={item}>{number}</span>
+	return (
+		<span
+			ref={item}
+			className={className}
+		>
+			{number.toLocaleString('pt-BR')}
+		</span>
+	)
 }

@@ -8,7 +8,7 @@ import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
 import { SplitText } from 'gsap/dist/SplitText'
 
-// Register plugins only when needed
+// register plugins only when needed
 if (typeof window !== 'undefined') {
 	gsap.registerPlugin(ScrollTrigger, SplitText)
 }
@@ -30,7 +30,10 @@ export default function AnimatedTitle({
     useGSAP(() => {
 		if (!item.current) return
 
-		const split = new SplitText(item.current, { type: 'lines' })
+		const split = new SplitText(item.current, {
+			type: 'lines',
+			tag: 'span'
+		})
 
 		split.lines.forEach((line) => {
 			gsap.to(line, {
@@ -38,10 +41,9 @@ export default function AnimatedTitle({
 				ease: 'none',
 				scrollTrigger: {
 					trigger: line,
-					scrub: 3,
+					scrub: true,
 					start: 'top 75%',
-					end: 'bottom 60%',
-					//markers: true
+					end: 'bottom 60%'
 				}
 			})
 		})

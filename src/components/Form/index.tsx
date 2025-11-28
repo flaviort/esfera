@@ -17,9 +17,6 @@ import UxCheck from '@/assets/svg/ux/check.svg'
 import UxClose from '@/assets/svg/ux/close.svg'
 import UxFile from '@/assets/svg/ux/file.svg'
 
-// css
-import styles from './form.module.scss'
-
 export interface FormProps {
 	className?: string
 	children: React.ReactNode

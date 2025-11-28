@@ -31,7 +31,7 @@ export default function StaggerUp({
 
 			gsap.set(children, {
 				opacity: 0,
-				y: '20vh'
+				y: '10vh'
 			})
 
 			ScrollTrigger.batch(children, {
@@ -40,17 +40,17 @@ export default function StaggerUp({
 					gsap.to(elements, {
 						opacity: 1,
 						y: 0,
-						stagger: 0.25,
-						duration: 1
+						stagger: 0.125,
+						duration: .5
 					})
 				},
 				...(infinite && {
 					onLeaveBack: elements => {
 						gsap.to(elements, {
 							opacity: 0,
-							y: '20vh',
-							stagger: 0.15,
-							duration: 1
+							y: '10vh',
+							stagger: 0.125,
+							duration: .5
 						})
 					}
 				})

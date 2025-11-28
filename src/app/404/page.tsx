@@ -5,9 +5,6 @@ import Link from 'next/link'
 // components
 import MagneticButton from '@/components/Utils/Animations/MagneticButton'
 
-// css
-import styles from './index.module.scss'
-
 // images
 import banner from '@/assets/img/banners/lab.jpg'
 import headquarter from '@/assets/img/banners/headquarters.jpg'
@@ -16,40 +13,40 @@ import headquarter from '@/assets/img/banners/headquarters.jpg'
 import { pages } from '@/utils/routes'
 
 export const metadata = {
-	title: 'Error 404 | PureKana'
+	title: 'Error 404 | Agência Esfera'
 }
 
 export default function Error404() {
 	return (
-		<main className={styles.page}>
+		<main>
 
 			Oppz! Error 404
 
-			<section className='pb-small pb-md-big'>
+			<section className=''>
 				<div className='container'>
 					<div className='row'>
 						
-						<div className={clsx(styles.flex, 'col-md-6 pt-md-medium pb-smaller pb-md-1')}>
+						<div className='col-md-6'>
 
-							<h2 className='text-40 medium'>
-								Uh-oh! This page is feeling under the weather.
+							<h2 className=''>
+								Opa! Esta página está sentindo mal.
 							</h2>
 
 							<p>
-								<b>Looks like the link you followed isn’t in our formula.</b> But don’t worry. We’ve got the right prescription to get you back on track! <br /><br />
+								<b>Parece que o link que você seguiu não está em nossa fórmula.</b> Mas não se preocupe. Temos a receita certa para você voltar ao caminho certo! <br /><br />
 
-								Or feel free to <Link href={pages.contact} className='hover-underline'><b>contact us</b></Link>.
+								Ou sinta-se à vontade para <Link href={pages.contact} className='hover-underline'><b>entrar em contato</b></Link>.
 							</p>
 
 							<MagneticButton>
 								<Link href={pages.home} className='button button--black'>
-									Back to Home
+									Voltar para a Home
 								</Link>
 							</MagneticButton>
 
 						</div>
 
-						<div className={clsx(styles.image, 'col-md-6')}>
+						<div className='col-md-6'>
 							
 						</div>
 

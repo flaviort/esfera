@@ -1,0 +1,36 @@
+.fill-title {
+    > * {
+        @apply text-transparent;
+        background: linear-gradient(
+            to right,
+            var(--color-yellow) 50%,
+            var(--color-gray-lightest) 50%
+        );
+        background-size: 200% 100%;
+        background-position-x: 100%;
+        background-clip: text;
+        -webkit-background-clip: text;
+    }
+
+    &--invert {
+        > * {
+            background: linear-gradient(
+                to right,
+                var(--color-white) 50%,
+                var(--color-yellow) 50%
+            );
+        }
+    }
+}
+
+.block-line-wrapper {
+    @apply relative w-max inline-block;
+}
+
+.block-line {
+    @apply relative block;
+}
+
+.block-revealer {
+    @apply absolute top-0 left-0 w-[101%] h-[101%] pointer-events-none will-change-transform z-1;
+}

@@ -12,9 +12,7 @@ import Guidelines from '@/components/Utils/Guidelines'
 import Footer from '@/components/Footer'
 
 // css
-import '@/assets/css/normalize.min.css'
-import '@/assets/css/bootstrap-grid.min.css'
-import '@/assets/scss/main.scss'
+import '@/assets/css/global.css'
 
 // metadata
 export const metadata: Metadata = {
@@ -51,13 +49,21 @@ export const viewport: Viewport = {
 	userScalable: false
 }
 
-import { Poppins } from 'next/font/google'
+import { Poppins, Antonio } from 'next/font/google'
 
 const poppins = Poppins({
 	weight: ['400', '600', '700'],
 	style: ['normal'],
 	subsets: ['latin'],
 	variable: '--font-poppins',
+	display: 'swap'
+})
+
+const antonio = Antonio({
+	weight: ['600'],
+	style: ['normal'],
+	subsets: ['latin'],
+	variable: '--font-antonio',
 	display: 'swap'
 })
 
@@ -110,7 +116,7 @@ export default function RootLayout({
 	}
 
 	return (
-		<html lang='pt-BR' className={clsx(poppins.className)}>
+		<html lang='pt-BR' className={clsx(poppins.className, antonio.className)}>
 
 			<head>
 				<meta name='apple-mobile-web-app-title' content='Esfera' />
