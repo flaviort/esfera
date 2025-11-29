@@ -1,0 +1,180 @@
+// libraries
+import Link from 'next/link'
+
+// components
+import MagneticButton from '@/components/Utils/Animations/MagneticButton'
+import { Form, Input, InputHidden, Textarea, Checkbox, Submit } from '@/components/Form'
+
+// utils
+import { phone, email } from '@/utils/functions'
+import { contact, socialLinks } from '@/utils/routes'
+
+export const metadata = {
+	title: 'Contato Agência Esfera: Endereço | Telefone | Email | Redes Sociais',
+	description: 'Entre em contato conosco para tirar suas ideias do papel.',
+	canonical: '/contato'
+}
+
+export default function Contact() {
+	return (
+		<main>
+
+			<section className='bg-white pt-35 md:pt-40 xl:pt-50 pb-15 md:pb-20 xl:pb-30'>
+				<div className='base-container'>
+					<div className='row'>
+
+						<div className='col-lg-6 xl:pr-20! mb-10 lg:mb-0'>
+
+							<h1 className='text-100 font-heading font-semibold uppercase tracking-tighter'>
+								Let's Talk
+							</h1>
+
+							<p className='text-24 my-5 lg:my-10 leading-normal'>
+								Estamos aqui, é so chamar!<br />
+								Entre em contato e marque um café aqui na Esfera!
+							</p>
+
+							<div className='bg-yellow p-6 md:p-10 rounded-lg w-full block'>
+
+								<ul className='flex items-center justify-end gap-2'>
+									{socialLinks.map((item, i) => (
+										<li key={i}>
+											<MagneticButton>
+												<Link
+													href={item.href}
+													target='_blank'
+													rel='noopener noreferrer'
+													className='flex items-center justify-center w-12 lg:w-15 min-w-12 lg:min-w-15 h-12 lg:h-15 border border-current text-black rounded-full transition-colors duration-200 hover:text-white hover:bg-black hover:border-black p-4 lg:p-5'
+													aria-label={item.name}
+												>
+													<item.icon className='w-full h-full' />
+												</Link>
+											</MagneticButton>
+										</li>
+									))}
+								</ul>
+
+								<div className='flex flex-col mt-20 lg:mt-6'>
+									
+									<MagneticButton>
+										<Link
+											href={phone(contact.phone)}
+											className='text-20 hover-underline'
+										>
+											{contact.phone}
+										</Link>
+									</MagneticButton>
+
+									<MagneticButton>
+										<Link
+											href={email(contact.email)}
+											className='text-18 font-semibold hover-underline max-sm:text-base!'
+										>
+											{contact.email}
+										</Link>
+									</MagneticButton>
+
+								</div>
+
+							</div>
+
+						</div>
+
+						<div className='col-lg-6'>
+							<Form
+								endpoint='/api/contact'
+								onSuccess={{
+									title: 'Mensagem enviada com sucesso!',
+									text: 'Obrigado por entrar em contato. Entraremos em contato o mais breve possível.'
+								}}
+								onError={{
+									title: 'Ocorreu um erro ao enviar a mensagem.',
+									text: 'Por favor, tente novamente mais tarde.'
+								}}
+								clearOnSubmit
+							>
+
+								<InputHidden
+									name='form'
+									value='contact'
+									id='form'
+								/>
+
+								<Input
+									id='name'
+									name='Nome'
+									label='Nome'
+									placeholder='Digite seu nome'
+									type='text'
+									required
+								/>
+
+								<Input
+									id='email'
+									name='Email'
+									label='Email'
+									placeholder='Digite seu email'
+									type='email'
+									required
+								/>
+
+								<Input
+									id='phone'
+									name='Telefone'
+									label='Telefone'
+									placeholder='(00) 00000-0000'
+									type='tel'
+									required
+								/>
+
+								<Textarea
+									id='message'
+									name='Mensagem'
+									label='Mensagem'
+									placeholder='Digite sua mensagem'
+									required
+								/>
+
+								<div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6'>
+
+									<Checkbox
+										id='newsletter'
+										name='Newsletter'
+										checked
+										required
+										type='checkbox'
+										label='Concordo em receber comunicações de acordo com meus interesses.'
+										className='mb-0!'
+									/>
+
+									<MagneticButton className='max-sm:w-full!'>
+										<Submit
+											text='Enviar'
+											className='max-sm:w-full!'
+										/>
+									</MagneticButton>
+
+								</div>
+
+							</Form>
+						</div>
+
+					</div>
+				</div>
+			</section>
+
+			<section className='bg-white w-full overflow-hidden h-[60svh]'>
+				<iframe
+					src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3602.4275057544082!2d-49.291549324002624!3d-25.457396677544395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94dce385f11942c7%3A0x2bb39b9ff1afef0f!2sAg%C3%AAncia%20Esfera!5e0!3m2!1spt-BR!2sbr!4v1764455520806!5m2!1spt-BR!2sbr'
+					width='600'
+					height='450'
+					allowFullScreen
+					loading='lazy'
+					referrerPolicy='no-referrer-when-downgrade'
+					className='w-full h-full grayscale-100 border-none!'
+				/>
+			</section>
+
+		</main>
+	)
+}

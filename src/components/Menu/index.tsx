@@ -184,6 +184,7 @@ export default function Menu() {
 		}
 
 		let ticking = false
+
 		const handleScroll = () => {
 			if (!ticking) {
 				window.requestAnimationFrame(() => {
@@ -305,7 +306,7 @@ export default function Menu() {
 											href={item.href}
 											className={clsx(
 												'hover-underline text-20 font-normal',
-												pathname === item.href ? 'text-yellow' : 'text-white'
+												pathname === item.href ? 'text-yellow' : pathname === pages.contact ? 'text-black' : 'text-white'
 											)}
 										>
 											{item.label}
@@ -331,7 +332,10 @@ export default function Menu() {
 										href={item.href}
 										target='_blank'
 										rel='noopener noreferrer'
-										className='flex items-center justify-center w-12 min-w-12 h-12 border border-current text-white rounded-full transition-colors duration-200 hover:text-black hover:bg-yellow hover:border-yellow p-4'
+										className={clsx(
+											'flex items-center justify-center w-12 min-w-12 h-12 border border-current rounded-full transition-colors duration-200 hover:text-black hover:bg-yellow hover:border-yellow p-4',
+											pathname === pages.contact ? 'text-black' : 'text-white'
+										)}
 										aria-label={item.name}
 									>
 										<item.icon className='w-full h-full' />
@@ -342,7 +346,10 @@ export default function Menu() {
 
 						<li className='hidden sm:block lg:hidden'>
 							<div
-								className='w-10 h-px block bg-white mx-2'
+								className={clsx(
+									'w-10 h-px block mx-2',
+									pathname === pages.contact ? 'bg-black' : 'bg-white'
+								)}
 								data-top-menu-divider
 							/>
 						</li>
@@ -350,7 +357,10 @@ export default function Menu() {
 						<li className='lg:hidden'>
 							<MagneticButton>
 								<button
-									className='w-14 sm:w-12 min-w-14 sm:min-w-12 h-14 sm:h-12 rounded-full border border-current text-white hover:border-yellow hover:bg-yellow hover:text-black flex flex-col items-center justify-center gap-1 relative transition-colors duration-200 cursor-pointer px-3 group'
+									className={clsx(
+										'w-14 sm:w-12 min-w-14 sm:min-w-12 h-14 sm:h-12 rounded-full border border-current hover:border-yellow hover:bg-yellow hover:text-black flex flex-col items-center justify-center gap-1 relative transition-colors duration-200 cursor-pointer px-3 group',
+										pathname === pages.contact ? 'text-black' : 'text-white'
+									)}
 									type='button'
 									onClick={toggleFsMenu}
 									data-top-menu-button
@@ -395,7 +405,10 @@ export default function Menu() {
 			>
 
 				<div
-					className='bg-linear-180 from-black/90 to-transparent absolute inset-0 z-0'
+					className={clsx(
+						'bg-linear-180 to-transparent absolute inset-0 z-0',
+						pathname === pages.contact ? 'from-white/90' : 'from-black/90'
+					)}
 					data-sticky-menu-bg
 				/>
 

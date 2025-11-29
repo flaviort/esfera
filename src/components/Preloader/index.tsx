@@ -151,7 +151,7 @@ export default function Preloader() {
             }
         })
         
-        tlInternal.to(preloaderRef, {
+        tlInternal.to(preloaderRef.current, {
             autoAlpha: 0,
             duration: .6,
             ease: 'power2.inOut'
