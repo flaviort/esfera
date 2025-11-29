@@ -28,7 +28,6 @@ export default function Intro() {
     const videoContainerRef = useRef<HTMLDivElement>(null)
     const videoRef = useRef<HTMLVideoElement>(null)
     const targetRef = useRef<HTMLDivElement>(null)
-    const swiperRef = useRef<any>(null)
 
     const handleSlideChange = (swiper: any) => {
         const allSlides = swiper.slides
@@ -153,8 +152,7 @@ export default function Intro() {
 
                 <div 
                     ref={videoContainerRef}
-                    className='absolute inset-0 w-full h-full overflow-hidden bg-black'
-                    style={{ willChange: 'transform' }}
+                    className='absolute inset-0 w-full h-full overflow-hidden bg-black will-change-transform'
                 >
                     <video
                         ref={videoRef}
@@ -173,7 +171,7 @@ export default function Intro() {
                 </div>
 
                 <div className='banner-texts base-container relative z-2'>
-                    <div className='relative flex items-center justify-center text-center h-lvh'>
+                    <div className='relative flex items-center justify-center text-center h-svh'>
 
                         <p className='text-24 text-white absolute z-4 bottom-10 left-0 leading-snug!'>
                             Somos uma <br />
@@ -253,9 +251,7 @@ export default function Intro() {
                             <div 
                                 ref={targetRef}
                                 className='relative overflow-hidden w-full block rounded-lg sm:rounded-xl md:rounded-4xl lg:rounded-[40rem] h-[60vw] lg:h-auto'
-                            >
-                                {/* Target position for video */}
-                            </div>
+                            ></div>
                         </div>
 
                         <div className='col-lg-5 col-lg-pull-7 lg:py-10'>

@@ -10,6 +10,7 @@ import Menu from '@/components/Menu'
 import SmoothScroller from '@/components/Utils/SmoothScroller'
 import Guidelines from '@/components/Utils/Guidelines'
 import Footer from '@/components/Footer'
+import Preloader from '@/components/Preloader'
 
 // css
 import '@/assets/css/global.css'
@@ -136,6 +137,8 @@ export default function RootLayout({
 				<div id='overlay' />
 
 				<Menu />
+
+				<Preloader />
 
 				<SmoothScroller>
 
