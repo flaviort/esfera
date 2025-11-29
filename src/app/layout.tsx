@@ -11,6 +11,7 @@ import SmoothScroller from '@/components/Utils/SmoothScroller'
 import Guidelines from '@/components/Utils/Guidelines'
 import Footer from '@/components/Footer'
 import Preloader from '@/components/Preloader'
+import ViewportHeight from '@/components/Utils/ViewportHeight'
 
 // css
 import '@/assets/css/global.css'
@@ -133,6 +134,8 @@ export default function RootLayout({
 			</head>
 
 			<body id='start'>
+
+				<ViewportHeight />
 
 				<div id='overlay' />
 

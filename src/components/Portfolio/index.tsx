@@ -150,12 +150,12 @@ export default function Portfolio() {
 
 	return (
 		<section
-			className='bg-black flex items-center justify-center overflow-hidden h-svh'
+			className='bg-black flex items-center justify-center overflow-hidden h-[calc(var(--vh)*100)]'
 			ref={containerRef}
 		>
 
 			<div
-				className='absolute inset-0 w-full h-svh opacity-50'
+				className='absolute inset-0 w-full h-[calc(var(--vh)*100)] opacity-50'
 				ref={bgRef}
 			>
 				{projects.map((item, i) => (

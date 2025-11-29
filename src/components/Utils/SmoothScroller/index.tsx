@@ -1,9 +1,3 @@
-'use client'
-
-// libraries
-import gsap from 'gsap'
-import { useEffect, useRef } from 'react'
-
 // interface
 interface Props {
     children: React.ReactNode
