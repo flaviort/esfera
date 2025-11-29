@@ -8,7 +8,6 @@ import { usePathname } from 'next/navigation'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
-import { useLenis } from 'lenis/react'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -31,7 +30,6 @@ export default function Menu() {
 		isInteracting: false,
 		hideTimeout: null as NodeJS.Timeout | null
 	})
-	const lenis = useLenis()
 	const pathname = usePathname()
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
 
@@ -40,16 +38,20 @@ export default function Menu() {
 			paused: true,
 			onStart: () => {
 				setIsMenuOpen(true)
-				lenis?.stop()
-				document.body.style.overflow = 'hidden'
+				const viewport = document.getElementById('viewport')
+				if (viewport) {
+					viewport.style.overflow = 'hidden'
+				}
 				gsap.set('[data-fs-menu]', {
 					pointerEvents: 'auto'
 				})
 			},
 			onReverseComplete: () => {
 				setIsMenuOpen(false)
-				lenis?.start()
-				document.body.style.overflow = ''
+				const viewport = document.getElementById('viewport')
+				if (viewport) {
+					viewport.style.overflow = ''
+				}
 				gsap.set('[data-fs-menu]', {
 					pointerEvents: 'none'
 				})
@@ -152,7 +154,8 @@ export default function Menu() {
 	}, [])
 
 	useEffect(() => {
-		if (!lenis) return
+		const viewport = document.getElementById('viewport')
+		if (!viewport) return
 
 		const state = scrollStateRef.current
 
@@ -180,35 +183,49 @@ export default function Menu() {
 			}
 		}
 
-		const handleScroll = ({ scroll }: { scroll: number }) => {
-			const menu = document.querySelector('[data-sticky-menu]')
-			if (!menu) return
+		let ticking = false
+		const handleScroll = () => {
+			if (!ticking) {
+				window.requestAnimationFrame(() => {
+					const menu = document.querySelector('[data-sticky-menu]')
+					if (!menu) {
+						ticking = false
+						return
+					}
 
-			if (isMenuOpen) {
-				menu.classList.add('scrolling-up')
-				return
-			}
+					if (isMenuOpen) {
+						menu.classList.add('scrolling-up')
+						ticking = false
+						return
+					}
 
-			const isAboveThreshold = scroll < 500
-			const scrollDiff = state.lastScroll - scroll
-			const isSignificantScroll = Math.abs(scrollDiff) > 3
+					const scroll = viewport.scrollTop
+					const isAboveThreshold = scroll < 500
+					const scrollDiff = state.lastScroll - scroll
+					const isSignificantScroll = Math.abs(scrollDiff) > 3
 
-			if (isAboveThreshold) {
-				hideMenu(menu, true)
-				state.lastScroll = scroll
-				return
-			}
+					if (isAboveThreshold) {
+						hideMenu(menu, true)
+						state.lastScroll = scroll
+						ticking = false
+						return
+					}
 
-			if (isSignificantScroll) {
-				const isScrollingUp = scrollDiff > 0
+					if (isSignificantScroll) {
+						const isScrollingUp = scrollDiff > 0
 
-				if (isScrollingUp && !state.isScrollingUp) {
-					showMenu(menu)
-				} else if (!isScrollingUp && state.isScrollingUp) {
-					hideMenu(menu)
-				}
+						if (isScrollingUp && !state.isScrollingUp) {
+							showMenu(menu)
+						} else if (!isScrollingUp && state.isScrollingUp) {
+							hideMenu(menu)
+						}
 
-				state.lastScroll = scroll
+						state.lastScroll = scroll
+					}
+
+					ticking = false
+				})
+				ticking = true
 			}
 		}
 
@@ -231,10 +248,10 @@ export default function Menu() {
 		menu?.addEventListener('touchstart', handleInteractionStart)
 		menu?.addEventListener('touchend', handleInteractionEnd)
 
-		lenis.on('scroll', handleScroll)
+		viewport.addEventListener('scroll', handleScroll, { passive: true })
 
 		return () => {
-			lenis.off('scroll', handleScroll)
+			viewport.removeEventListener('scroll', handleScroll)
 			if (state.hideTimeout) clearTimeout(state.hideTimeout)
 			
 			menu?.removeEventListener('mouseenter', handleInteractionStart)
@@ -242,7 +259,7 @@ export default function Menu() {
 			menu?.removeEventListener('touchstart', handleInteractionStart)
 			menu?.removeEventListener('touchend', handleInteractionEnd)
 		}
-	}, [lenis, isMenuOpen])
+	}, [isMenuOpen])
 
 	const topMenu = () => {
 		return (
@@ -393,7 +410,6 @@ export default function Menu() {
 			<section
 				className='fixed z-98 top-0 left-0 w-full pointer-events-none'
 				data-fs-menu
-				data-lenis-prevent
 			>
 				<div className='base-container'>
 					<div className='flex flex-col gap-10 justify-between min-h-dvh pt-30 pb-10'>

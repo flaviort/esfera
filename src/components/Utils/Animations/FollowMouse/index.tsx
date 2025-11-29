@@ -1,5 +1,4 @@
 // libraries
-import { useLenis } from 'lenis/react'
 import { useRef } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
@@ -19,7 +18,6 @@ export default function FollowMouse({
     scrollTrigger
 }: Props) {
 
-    const lenis = useLenis()
     const section = useRef<HTMLDivElement>(null)
     const object = useRef<HTMLDivElement>(null)
 
@@ -72,9 +70,23 @@ export default function FollowMouse({
         }
 
         parent?.addEventListener('mouseleave', () => leave())
-        document.addEventListener('scroll', leave)
+        
+        // Listen to scroll on #viewport instead of document
+        const viewport = document.getElementById('viewport')
+        if (viewport) {
+            viewport.addEventListener('scroll', leave, { passive: true })
+        }
 
-    }, { dependencies: [lenis] })
+        return () => {
+            parent?.removeEventListener('mousemove', moveCircle)
+            parent?.removeEventListener('wheel', moveCircle)
+            parent?.removeEventListener('mouseenter', () => {})
+            parent?.removeEventListener('mouseleave', leave)
+            if (viewport) {
+                viewport.removeEventListener('scroll', leave)
+            }
+        }
+    }, [scrollTrigger])
 
     return (
         <div
