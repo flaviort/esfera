@@ -138,9 +138,9 @@ export default function RootLayout({
 
 				{/*<Preloader />*/}
 
-				<Menu />
-
 				<SmoothScroller>
+
+					<Menu />
 
 					{children}
 

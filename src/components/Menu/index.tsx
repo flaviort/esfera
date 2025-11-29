@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { useRef, useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
 import { useLenis } from 'lenis/react'
 
