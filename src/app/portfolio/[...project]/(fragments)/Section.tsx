@@ -5,11 +5,13 @@ import clsx from 'clsx'
 interface Props {
     children: React.ReactNode
     className?: string
+    ref?: React.RefObject<HTMLDivElement>
 }
 
 export default function Section({
     children,
-    className
+    className,
+    ref
 }: Props) {
     return (
         <section
@@ -18,6 +20,7 @@ export default function Section({
                 className
             )}
             style={{ clipPath: 'inset(0% 0% 0% 0%)' }}
+            ref={ref}
         >
             {children}
         </section>

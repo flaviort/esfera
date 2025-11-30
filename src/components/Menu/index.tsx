@@ -33,6 +33,13 @@ export default function Menu() {
 	const pathname = usePathname()
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
 
+	// helper function to check if a route is active (including nested routes)
+	const isActiveRoute = (href: string) => {
+		if (pathname === href) return true
+		if (href === pages.portfolio && pathname.startsWith(pages.portfolio + '/')) return true
+		return false
+	}
+
 	useGSAP(() => {
 		menuAnimationRef.current = gsap.timeline({
 			paused: true,
@@ -324,7 +331,7 @@ export default function Menu() {
 											href={item.href}
 											className={clsx(
 												'hover-underline text-20 font-normal',
-												pathname === item.href ? 'text-yellow' : pathname === pages.contact ? 'text-black' : 'text-white'
+												isActiveRoute(item.href) ? 'text-yellow' : pathname === pages.contact ? 'text-black' : 'text-white'
 											)}
 										>
 											{item.label}
@@ -479,7 +486,7 @@ export default function Menu() {
 										href={item.href}
 										className={clsx(
 											'font-heading font-semibold uppercase text-6xl leading-[.9]',
-											pathname === item.href ? 'text-yellow' : 'text-gray-dark'
+											isActiveRoute(item.href) ? 'text-yellow' : 'text-gray-dark'
 										)}
 										onClick={closeFsMenu}
 									>

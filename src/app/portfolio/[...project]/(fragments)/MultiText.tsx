@@ -41,7 +41,7 @@ export default function MultiText({
                     <div className='row'>
 
                         {subTitle && (
-                            <div className='col-lg-4'>
+                            <div className='col-lg-4 mb-4 lg:mb-0'>
                                 <TextReveal className='[&_.block-revealer]:h-[120%]!'>
                                     <h3 className='font-heading text-36 font-semibold text-yellow uppercase'>
                                         {subTitle}
@@ -55,7 +55,7 @@ export default function MultiText({
                                 'col-lg-6',
                                 !subTitle && 'offset-lg-4'
                             )}>
-                                <div className='rich-text leading-loose'>
+                                <div className='rich-text'>
                                     {children}
                                 </div>
                             </div>

@@ -32,7 +32,7 @@ export default function FullscreenMedia({
                         src={image}
                         alt={alt || ''}
                         fill
-                        className='object-cover'
+                        className='cover'
                         loading='lazy'
                         sizes='100vw'
                     />
@@ -42,7 +42,7 @@ export default function FullscreenMedia({
             {video && (
                 <Video
                     video={video}
-                    className='w-full h-full object-cover'
+                    className='cover'
                 />
             )}
         </Section>
