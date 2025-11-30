@@ -13,15 +13,17 @@ interface Props {
     title?: string
     subTitle?: string
     children?: React.ReactNode
+    className?: string
 }
 
 export default function MultiText({
     title,
     subTitle,
-    children
+    children,
+    className
 }: Props) {
     return (
-        <Section>
+        <Section className={className}>
             <div className='base-container'>
 
                 {title && (

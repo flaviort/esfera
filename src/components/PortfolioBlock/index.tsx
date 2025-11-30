@@ -26,6 +26,7 @@ export default function PortfolioBlock({
             data-category={category}
             data-date={date}
             className='bg-black relative overflow-hidden aspect-square rounded-md flex items-end p-4 group after:content-[""] after:absolute after:bottom-0 after:left-0 after:w-full after:h-1/3 after:bg-linear-0 after:from-black after:to-transparent after:opacity-70'
+            aria-label={title + ' - ' + text}
         >
             <Image
                 src={image}

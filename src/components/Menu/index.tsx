@@ -300,6 +300,7 @@ export default function Menu() {
 							href={pages.home}
 							className='w-40 h-auto flex text-yellow -translate-y-1.5 lg:-translate-y-2.5'
 							onClick={closeFsMenu}
+							aria-label='Esfera'
 						>
 							<Logo className='w-full h-auto' />
 						</Link>
@@ -389,6 +390,7 @@ export default function Menu() {
 									type='button'
 									onClick={toggleFsMenu}
 									data-top-menu-button
+									aria-label='Menu'
 								>
 
 									{Array.from({ length: 2 }).map((_, i) => (

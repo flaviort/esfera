@@ -73,25 +73,27 @@ export default function Banner({
 
             <div className='base-container relative z-2'>
 
-                <div className='flex flex-col-reverse gap-4 lg:gap-5 justify-end pb-[6svh] min-h-vh min-h-svh relative lg:pr-50 pt-40'>
+                <div className='row'>
+                    <div className='col-lg-6'>
 
-                    <h1 className='font-heading uppercase text-100 font-semibold text-white tracking-tighter'>
-                        {title}
-                    </h1>
+                        <div className='flex flex-col-reverse gap-4 lg:gap-5 justify-start pb-[6svh] min-h-vh min-h-svh relative pt-40'>
 
-                    <h2 className='text-20 text-white'>
-                        {subtitle}
-                    </h2>
+                            <h1 className='text-60 font-semibold text-white tracking-tight leading-[1.1]!'>
+                                {title}
+                            </h1>
 
-                </div>
+                            <h2 className='text-20 text-yellow'>
+                                {subtitle}
+                            </h2>
 
-                <div className='flex flex-col justify-center py-[5svh] lg:py-[8svh] lg:min-h-vh lg:min-h-svh'>
-                    <div className='row'>
-                        <div className='col-lg-6 offset-lg-4'>
+                        </div>
+
+                        <div className='flex flex-col pt-5 pb-60'>
                             <TextReveal>
                                 {children}
                             </TextReveal>
                         </div>
+
                     </div>
                 </div>
 
