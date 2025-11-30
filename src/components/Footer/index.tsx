@@ -1,5 +1,5 @@
 // libraries
-import Link from 'next/link'
+import { Link } from 'next-transition-router'
 import Image from 'next/image'
 
 // components

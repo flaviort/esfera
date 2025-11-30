@@ -12,6 +12,7 @@ import Guidelines from '@/components/Utils/Guidelines'
 import Footer from '@/components/Footer'
 import Preloader from '@/components/Preloader'
 import ViewportHeight from '@/components/Utils/ViewportHeight'
+import PageTransition from '@/components/Utils/PageTransition'
 
 // css
 import '@/assets/css/global.css'
@@ -139,17 +140,19 @@ export default function RootLayout({
 
 				<div id='overlay' />
 
-				<Preloader />
+				{/* <Preloader /> */}
 
-				<SmoothScroller>
+				<PageTransition>
+					<SmoothScroller>
 
-					<Menu />
+						<Menu />
 
-					{children}
+						{children}
 
-					<Footer />
+						<Footer />
 
-				</SmoothScroller>
+					</SmoothScroller>
+				</PageTransition>
 
 				{ process.env.NODE_ENV === 'development' && <Guidelines /> }
 

@@ -2,6 +2,7 @@
 
 // libraries
 import { useEffect, useRef } from 'react'
+import { usePathname } from 'next/navigation'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -16,19 +17,45 @@ export default function SmoothScroller({
     children
 }: Props) {
     const viewportRef = useRef<HTMLDivElement>(null)
+    const smoothScrollStateRef = useRef<{
+        currentScroll: number
+        targetScroll: number
+        isScrolling: boolean
+        rafId: number | null
+    } | null>(null)
+    const pathname = usePathname()
+
+    // scroll to top on route change
+    useEffect(() => {
+        const viewport = viewportRef.current
+        if (!viewport) return
+
+        // reset smooth scroll state if it exists
+        if (smoothScrollStateRef.current) {
+            smoothScrollStateRef.current.currentScroll = 0
+            smoothScrollStateRef.current.targetScroll = 0
+            smoothScrollStateRef.current.isScrolling = false
+            if (smoothScrollStateRef.current.rafId !== null) {
+                cancelAnimationFrame(smoothScrollStateRef.current.rafId)
+                smoothScrollStateRef.current.rafId = null
+            }
+        }
+
+        // scroll to top immediately when route changes
+        viewport.scrollTop = 0
+
+    }, [pathname])
 
     useEffect(() => {
         const viewport = viewportRef.current
         if (!viewport) return
 
-        // Only enable smooth scroll on desktop (not mobile for better performance)
+        // only enable smooth scroll on desktop (not mobile for better performance)
         const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
         
-        // Configure ScrollTrigger
         ScrollTrigger.config({ ignoreMobileResize: true })
 
         if (isMobile) {
-            // On mobile, just refresh ScrollTrigger
             const timer = setTimeout(() => {
                 ScrollTrigger.refresh(true)
             }, 1000)
@@ -38,65 +65,67 @@ export default function SmoothScroller({
             }
         }
 
-        // Desktop smooth scroll using requestAnimationFrame with lerp
-        let currentScroll = viewport.scrollTop
-        let targetScroll = viewport.scrollTop
-        let isScrolling = false
-        let rafId: number | null = null
+        // desktop smooth scroll using requestAnimationFrame with lerp
+        const state = {
+            currentScroll: viewport.scrollTop,
+            targetScroll: viewport.scrollTop,
+            isScrolling: false,
+            rafId: null as number | null
+        }
+        smoothScrollStateRef.current = state
 
-        // Lerp function for smooth interpolation
+        // lerp function for smooth interpolation
         const lerp = (start: number, end: number, factor: number) => {
             return start + (end - start) * factor
         }
 
         const smoothScroll = () => {
-            // Calculate difference
-            const diff = targetScroll - currentScroll
+            // calculate difference
+            const diff = state.targetScroll - state.currentScroll
             
-            // If difference is very small, snap to target
+            // if difference is very small, snap to target
             if (Math.abs(diff) < 0.5) {
-                currentScroll = targetScroll
-                viewport.scrollTop = currentScroll
-                isScrolling = false
-                rafId = null
+                state.currentScroll = state.targetScroll
+                viewport.scrollTop = state.currentScroll
+                state.isScrolling = false
+                state.rafId = null
                 return
             }
 
-            // Lerp towards target (0.1 = faster, 0.05 = slower but smoother)
-            currentScroll = lerp(currentScroll, targetScroll, 0.075)
-            viewport.scrollTop = currentScroll
+            // lerp towards target (0.1 = faster, 0.05 = slower but smoother)
+            state.currentScroll = lerp(state.currentScroll, state.targetScroll, 0.075)
+            viewport.scrollTop = state.currentScroll
 
-            // Continue animation
-            rafId = requestAnimationFrame(smoothScroll)
+            state.rafId = requestAnimationFrame(smoothScroll)
         }
 
         const handleWheel = (e: WheelEvent) => {
             e.preventDefault()
             
-            // Update target scroll position
-            targetScroll += e.deltaY
-            targetScroll = Math.max(0, Math.min(targetScroll, viewport.scrollHeight - viewport.clientHeight))
+            // update target scroll position
+            state.targetScroll += e.deltaY
+            state.targetScroll = Math.max(0, Math.min(state.targetScroll, viewport.scrollHeight - viewport.clientHeight))
 
-            // Start smooth scroll animation if not already running
-            if (!isScrolling) {
-                isScrolling = true
+            // start smooth scroll animation if not already running
+            if (!state.isScrolling) {
+                state.isScrolling = true
                 smoothScroll()
             }
         }
 
-        // Handle programmatic scrolling (like anchor links)
+        // handle programmatic scrolling (like anchor links)
         const handleScroll = () => {
-            // If scroll happened without wheel (programmatic), sync immediately
-            if (!isScrolling) {
-                currentScroll = viewport.scrollTop
-                targetScroll = viewport.scrollTop
+            // if scroll happened without wheel (programmatic), sync immediately
+            if (!state.isScrolling) {
+                state.currentScroll = viewport.scrollTop
+                state.targetScroll = viewport.scrollTop
             }
         }
 
         viewport.addEventListener('wheel', handleWheel, { passive: false })
         viewport.addEventListener('scroll', handleScroll, { passive: true })
 
-        // Refresh ScrollTrigger after setup
+        // refresh scrollTrigger after setup
         const timer = setTimeout(() => {
             ScrollTrigger.refresh(true)
         }, 1000)
@@ -105,9 +134,10 @@ export default function SmoothScroller({
             viewport.removeEventListener('wheel', handleWheel)
             viewport.removeEventListener('scroll', handleScroll)
             clearTimeout(timer)
-            if (rafId !== null) {
-                cancelAnimationFrame(rafId)
+            if (state.rafId !== null) {
+                cancelAnimationFrame(state.rafId)
             }
+            smoothScrollStateRef.current = null
         }
     }, [])
   

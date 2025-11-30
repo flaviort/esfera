@@ -2,7 +2,7 @@
 
 // libraries
 import { useRef } from 'react'
-import Link from 'next/link'
+import { Link } from 'next-transition-router'
 import Image from 'next/image'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'

@@ -2,7 +2,7 @@
 
 // libraries
 import clsx from 'clsx'
-import Link from 'next/link'
+import { Link } from 'next-transition-router'
 import { useRef, useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import { gsap } from 'gsap'
@@ -152,6 +152,24 @@ export default function Menu() {
 			window.removeEventListener('keydown', handleEscape)
 		}
 	}, [])
+
+	// hide sticky menu on route change
+	useEffect(() => {
+		const menu = document.querySelector('[data-sticky-menu]')
+
+		if (menu) {
+			menu.classList.remove('scrolling-up')
+		}
+		
+		// reset scroll state
+		scrollStateRef.current.lastScroll = 0
+		scrollStateRef.current.isScrollingUp = false
+
+		if (scrollStateRef.current.hideTimeout) {
+			clearTimeout(scrollStateRef.current.hideTimeout)
+			scrollStateRef.current.hideTimeout = null
+		}
+	}, [pathname])
 
 	useEffect(() => {
 		const viewport = document.getElementById('viewport')

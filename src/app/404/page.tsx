@@ -1,5 +1,5 @@
 // libraries
-import Link from 'next/link'
+import { Link } from 'next-transition-router'
 
 // components
 import MagneticButton from '@/components/Utils/Animations/MagneticButton'
