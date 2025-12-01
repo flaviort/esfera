@@ -3,12 +3,10 @@
 // libraries
 import { useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
-import gsap from 'gsap'
+import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-if (typeof window !== 'undefined') {
-    gsap.registerPlugin(ScrollTrigger)
-}
+gsap.registerPlugin(ScrollTrigger)
 
 // interface
 interface Props {

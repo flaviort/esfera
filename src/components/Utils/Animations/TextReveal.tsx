@@ -2,14 +2,12 @@
 
 // libraries
 import React, { useRef } from 'react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
-import { SplitText } from 'gsap/dist/SplitText'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { SplitText } from 'gsap/SplitText'
 import { useGSAP } from '@gsap/react'
 
-if (typeof window !== 'undefined') {
-    gsap.registerPlugin(ScrollTrigger, SplitText)
-}
+gsap.registerPlugin(ScrollTrigger, SplitText)
 
 // interface
 interface Props {

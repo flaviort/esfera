@@ -4,13 +4,11 @@
 import Image from 'next/image'
 import { useTransitionRouter } from 'next-transition-router'
 import { useRef } from 'react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
 
-if (typeof window !== 'undefined') {
-	gsap.registerPlugin(ScrollTrigger)
-}
+gsap.registerPlugin(ScrollTrigger)
 
 export default function Portfolio() {
 

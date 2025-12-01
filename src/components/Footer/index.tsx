@@ -4,7 +4,7 @@
 import { Link } from 'next-transition-router'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import gsap from 'gsap'
+import { gsap } from 'gsap'
 
 // components
 import MagneticButton from '@/components/Utils/Animations/MagneticButton'

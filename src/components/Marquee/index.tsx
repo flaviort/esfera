@@ -4,7 +4,7 @@
 import { useRef } from 'react'
 import clsx from 'clsx'
 import Image from 'next/image'
-import gsap from 'gsap'
+import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
 
 // utils

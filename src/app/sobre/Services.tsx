@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { EffectCards, Mousewheel, Autoplay } from 'swiper/modules'
-import gsap from 'gsap'
+import { gsap } from 'gsap'
 import 'swiper/css'
 import 'swiper/css/effect-cards'
 

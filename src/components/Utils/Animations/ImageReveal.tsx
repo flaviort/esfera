@@ -4,13 +4,11 @@
 import clsx from 'clsx'
 import Image from 'next/image'
 import { useRef } from 'react'
-import { gsap } from 'gsap/dist/gsap'
+import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-if (typeof window !== 'undefined') {
-    gsap.registerPlugin(ScrollTrigger)
-}
+gsap.registerPlugin(ScrollTrigger)
 
 interface Props {
     src: string

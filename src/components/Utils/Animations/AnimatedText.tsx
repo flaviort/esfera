@@ -1,14 +1,12 @@
 'use client'
 
 import React, { useRef } from 'react'
-import { gsap } from 'gsap/dist/gsap'
+import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
-import { SplitText } from 'gsap/dist/SplitText'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { SplitText } from 'gsap/SplitText'
 
-if (typeof window !== 'undefined') {
-    gsap.registerPlugin(ScrollTrigger, SplitText)
-}
+gsap.registerPlugin(ScrollTrigger, SplitText)
 
 interface Props {
     text: React.ReactNode

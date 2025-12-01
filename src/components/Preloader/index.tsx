@@ -2,16 +2,14 @@
 
 // libraries
 import { useRef } from 'react'
-import gsap from 'gsap'
+import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
-import { SplitText } from 'gsap/dist/SplitText'
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
+import { SplitText } from 'gsap/SplitText'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 
-if (typeof window !== 'undefined') {
-    gsap.registerPlugin(SplitText, ScrollTrigger)
-}
+gsap.registerPlugin(SplitText, ScrollTrigger)
 
 export default function Preloader() {
 

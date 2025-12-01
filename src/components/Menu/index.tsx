@@ -6,12 +6,10 @@ import { Link } from 'next-transition-router'
 import { useRef, useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
 
-if (typeof window !== 'undefined') {
-	gsap.registerPlugin(ScrollTrigger)
-}
+gsap.registerPlugin(ScrollTrigger)
 
 // components
 import MagneticButton from '@/components/Utils/Animations/MagneticButton'
