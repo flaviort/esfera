@@ -47,13 +47,13 @@ export default function AnimatedTitle({
 				tag: 'span'
 			})
 
-			splitRef.current.lines.forEach((line) => {
-				gsap.to(line, {
+			splitRef.current.lines.forEach((item) => {
+				gsap.to(item, {
 					backgroundPositionX: 0,
 					ease: 'none',
 					scrollTrigger: {
 						scroller: document.getElementById('viewport') as HTMLElement,
-						trigger: line,
+						trigger: item,
 						scrub: true,
 						start: 'top 75%',
 						end: 'bottom 60%'

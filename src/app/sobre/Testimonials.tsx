@@ -46,7 +46,7 @@ export default function Testimonials() {
             title: 'Sócio'
         },
         {
-            bgColor: '#1D1D1B',
+            bgColor: '#35791E',
             logo: '/img/clients/john-deere.png',
             logoAlt: 'John Deere',
             image: '/img/portfolio/02-small.jpg',
@@ -55,16 +55,16 @@ export default function Testimonials() {
             title: 'CEO'
         },
         {
-            bgColor: '#1D1D1B',
-            logo: '/img/clients/portos-do-parana.png',
-            logoAlt: 'Portos do Paraná',
+            bgColor: '#0072CE',
+            logo: '/img/clients/bosch.svg',
+            logoAlt: 'Bosch',
             image: '/img/portfolio/03-small.jpg',
             text: 'Dedição, carinho e um zelo incomum são as palavras que me vêm à mente quando penso no trabalho da Esfera. Um evento completo, desde a ideia até a execução, com toda a dedicação e profissionalismo que só a Esfera pode oferecer.',
             person: 'Vanessa T.',
             title: 'Gerente de Marketing'
         },
         {
-            bgColor: '#0072CE',
+            bgColor: '#1D1D1B',
             logo: '/img/clients/corteva.png',
             logoAlt: 'Corteva',
             image: '/img/portfolio/01-small.jpg',
@@ -170,7 +170,7 @@ export default function Testimonials() {
                                                 alt={item.logoAlt}
                                                 width={150}
                                                 height={110}
-                                                className='block w-40 h-auto object-contain'
+                                                className='block w-40 h-auto object-contain brightness-0 invert'
                                             />
                                         )}
 

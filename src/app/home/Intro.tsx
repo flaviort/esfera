@@ -292,13 +292,13 @@ export default function Intro() {
                     >
                         {[
                             {
+                                sub: 'Prêmio Live 2021',
+                                title: 'Ouro em Agência Regional <br />de Brand Experience'
+                            },
+                            {
                                 sub: '20ª Mostra de <br />Comunicação do Agro ABMRA',
                                 title: 'Ouro em Programa e <br />Campanha de Incentivo',
                                 text: 'Case: Expo Latin America <br />2021 John Deere'
-                            },
-                            {
-                                sub: 'Prêmio Live 2021',
-                                title: 'Ouro em Agência Regional <br />de Brand Experience'
                             },
                             {
                                 sub: 'Premio Caio 2024',
