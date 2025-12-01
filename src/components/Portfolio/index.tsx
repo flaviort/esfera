@@ -2,7 +2,7 @@
 
 // libraries
 import Image from 'next/image'
-import { Link } from 'next-transition-router'
+import { useTransitionRouter } from 'next-transition-router'
 import { useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
@@ -14,23 +14,61 @@ if (typeof window !== 'undefined') {
 
 export default function Portfolio() {
 
+	const router = useTransitionRouter()
+	const mouseDownRef = useRef<{ x: number; y: number; time: number } | null>(null)
+	const isScrollingRef = useRef(false)
+
+	const handleMouseDown = (e: React.MouseEvent) => {
+		isScrollingRef.current = false
+		mouseDownRef.current = {
+			x: e.clientX,
+			y: e.clientY,
+			time: Date.now()
+		}
+	}
+
+	const handleMouseMove = () => {
+		if (mouseDownRef.current) {
+			isScrollingRef.current = true
+		}
+	}
+
+	const handleMouseUp = (e: React.MouseEvent, href: string) => {
+		if (!mouseDownRef.current) return
+
+		const deltaX = Math.abs(e.clientX - mouseDownRef.current.x)
+		const deltaY = Math.abs(e.clientY - mouseDownRef.current.y)
+		const deltaTime = Date.now() - mouseDownRef.current.time
+		const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY)
+
+		// If mouse moved less than 5px, took less than 300ms, and wasn't scrolling, consider it a click
+		if (distance < 5 && deltaTime < 300 && !isScrollingRef.current) {
+			e.preventDefault()
+			e.stopPropagation()
+			router.push(href)
+		}
+
+		mouseDownRef.current = null
+		isScrollingRef.current = false
+	}
+
 	const projects = [
 		{
-			href: '/portfolio/intermodal-25',
+			href: '/portfolio/intermodal-25#1',
 			bgImage: '/img/portfolio/01-big.jpg',
 			mainImage: '/img/portfolio/01-small.jpg',
 			textLeft: 'Agrinho 2024',
 			textRight: 'Do Campo à Cidade',
 		},
 		{
-			href: '/portfolio/intermodal-25',
+			href: '/portfolio/intermodal-25#2',
 			bgImage: '/img/portfolio/02-big.jpg',
 			mainImage: '/img/portfolio/02-small.jpg',
 			textLeft: 'John Deere Space',
 			textRight: 'Inovação em grande escala',
 		},
 		{
-			href: '/portfolio/intermodal-25',
+			href: '/portfolio/intermodal-25#3',
 			bgImage: '/img/portfolio/03-big.jpg',
 			mainImage: '/img/portfolio/03-small.jpg',
 			textLeft: 'Convenção Bosch Service 2025',
@@ -172,7 +210,7 @@ export default function Portfolio() {
 
 	return (
 		<section
-			className='bg-black flex items-center justify-center overflow-hidden h-[calc(var(--vh)*100)]'
+			className='bg-black flex items-center justify-center overflow-hidden h-[calc(var(--vh)*100)] cursor-pointer'
 			ref={containerRef}
 		>
 
@@ -201,13 +239,33 @@ export default function Portfolio() {
 
 				<div className='absolute z-99 w-full h-full'>
 					{projects.map((item, i) => (
-						<Link
+						<div
 							key={i}
-							href={item.href}
-							className='absolute inset-0 w-full h-full opacity-0 pointer-events-auto'
-							style={{ zIndex: projects.length - i }}
+							className='absolute inset-0 w-full h-full opacity-0'
+							style={{ 
+								zIndex: projects.length - i,
+								pointerEvents: 'auto'
+							}}
 							data-link
+							onMouseDown={handleMouseDown}
+							onMouseMove={handleMouseMove}
+							onMouseUp={(e) => handleMouseUp(e, item.href)}
+							onClick={(e) => {
+								// Fallback for touch devices
+								if (!mouseDownRef.current && !isScrollingRef.current) {
+									e.preventDefault()
+									router.push(item.href)
+								}
+							}}
 							aria-label={item.textLeft + ' - ' + item.textRight}
+							role='button'
+							tabIndex={0}
+							onKeyDown={(e) => {
+								if (e.key === 'Enter' || e.key === ' ') {
+									e.preventDefault()
+									router.push(item.href)
+								}
+							}}
 						/>
 					))}
 				</div>

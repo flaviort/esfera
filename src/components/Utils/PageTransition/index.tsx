@@ -1,7 +1,8 @@
 'use client'
 
 // linraries
-import { TransitionRouter } from 'next-transition-router'
+import { TransitionRouter, useTransitionState } from 'next-transition-router'
+import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
 
@@ -13,12 +14,51 @@ interface Props {
     children: React.ReactNode
 }
 
+// refresh scrolltrigger when page is ready
+function ScrollTriggerRefresher() {
+    const { isReady, stage } = useTransitionState()
+    const hasRefreshedRef = useRef(false)
+
+    useEffect(() => {
+        // only refresh once when page transition is complete and page is ready
+        if (isReady && stage === 'none' && !hasRefreshedRef.current) {
+            hasRefreshedRef.current = true
+            
+            // wait one frame to ensure all components have mounted
+            requestAnimationFrame(() => {
+                const triggers = ScrollTrigger.getAll()
+                //console.log('ScrollTrigger instances:', triggers.length, triggers)
+                
+                // force refresh all instances once
+                ScrollTrigger.refresh(true)
+            })
+        }
+        
+        // reset flag when entering a new page
+        if (stage === 'entering') {
+            hasRefreshedRef.current = false
+        }
+    }, [isReady, stage])
+
+    return null
+}
+
 export default function PageTransition({
     children
 }: Props) {
 
     const leaveAnimation = async () => {
         return new Promise((resolve) => {
+            
+            // kill all ScrollTrigger instances from the current page before leaving
+            const allScrollTriggers = ScrollTrigger.getAll()
+
+            //console.log('Killing ScrollTrigger instances on leave:', allScrollTriggers.length)
+
+            allScrollTriggers.forEach((st) => {
+                st.kill()
+            })
+
             const tl = gsap.timeline({
                 onComplete: resolve
             })
@@ -49,10 +89,6 @@ export default function PageTransition({
                 onComplete: () => {
                     gsap.set('[data-page-transition]', { clearProps: 'all' })
                     gsap.set('[data-page-transition] > div', { clearProps: 'all' })
-
-                    setTimeout(() => {
-                        ScrollTrigger.refresh()
-                    }, 20)
                 }
             })
 
@@ -72,6 +108,8 @@ export default function PageTransition({
         >
 
             {children}
+
+            <ScrollTriggerRefresher />
 
             <aside
                 className='fixed z-999999 inset-0 pointer-events-none'

@@ -1,6 +1,10 @@
+'use client'
+
 // libraries
 import { Link } from 'next-transition-router'
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
+import gsap from 'gsap'
 
 // components
 import MagneticButton from '@/components/Utils/Animations/MagneticButton'
@@ -11,7 +15,36 @@ import { email, getYear, phone } from '@/utils/functions'
 
 export default function Footer() {
 
+	const pathname = usePathname()
 	const year = getYear(new Date().getFullYear().toString())
+
+	const scrollToTop = (e: React.MouseEvent<HTMLAnchorElement>) => {
+		e.preventDefault()
+		const viewport = document.getElementById('viewport')
+		if (viewport) {
+			gsap.to(viewport, {
+				scrollTop: 0,
+				duration: 1.5,
+				ease: 'power1.inOut'
+			})
+		}
+	}
+
+	const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+		// Only handle internal page links (not email, phone, or external links)
+		if (href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('http')) {
+			return
+		}
+
+		// Remove hash from href for comparison
+		const hrefPath = href.split('#')[0]
+		const currentPath = pathname.split('#')[0]
+
+		// If we're on the same page, smooth scroll to top
+		if (hrefPath === currentPath) {
+			scrollToTop(e)
+		}
+	}
 
 	return (
 		<footer
@@ -29,6 +62,7 @@ export default function Footer() {
 								<Link
 									href={pages.home}
 									className='w-12 min-w-12 h-12 flex transition-opacity duration-200 hover:opacity-70'
+									onClick={(e) => handleLinkClick(e, pages.home)}
 								>
 									<Image
 										src='/img/svg/logo/icon-black.svg'
@@ -65,6 +99,7 @@ export default function Footer() {
 									<Link
 										href={item.href}
 										className='hover-underline text-36 font-heading font-semibold uppercase max-xs:text-5xl!'
+										onClick={(e) => handleLinkClick(e, item.href)}
 									>
 										{item.label}
 									</Link>
@@ -89,6 +124,7 @@ export default function Footer() {
 							<Link
 								href={pages.home}
 								className='w-14 min-w-14 h-14 hidden xl:flex transition-opacity duration-200 hover:opacity-70'
+								onClick={(e) => handleLinkClick(e, pages.home)}
 							>
 								<Image
 									src='/img/svg/logo/icon-black.svg'

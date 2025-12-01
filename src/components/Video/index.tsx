@@ -24,22 +24,43 @@ export default function Video({
     
     const videoWrapperRef = useRef<HTMLDivElement>(null)
     const videoRef = useRef<HTMLVideoElement>(null)
+    const scrollTriggerRef = useRef<ScrollTrigger | null>(null)
+
+    const safePlay = async (videoElement: HTMLVideoElement) => {
+        try {
+            await videoElement.play()
+        } catch (error) {
+            if (error instanceof Error && error.name !== 'AbortError') {
+                console.warn('Video play error:', error)
+            }
+        }
+    }
 
     useGSAP(() => {
         if (!videoWrapperRef.current || !videoRef.current) return
 
         const videoElement = videoRef.current
 
-        ScrollTrigger.create({
+        scrollTriggerRef.current = ScrollTrigger.create({
             scroller: document.getElementById('viewport'),
             trigger: videoWrapperRef.current,
             start: '0% 120%',
             end: '100% -20%',
-            onEnter: () => videoElement.play(),
-            onEnterBack: () => videoElement.play(),
+            onEnter: () => safePlay(videoElement),
+            onEnterBack: () => safePlay(videoElement),
             onLeave: () => videoElement.pause(),
             onLeaveBack: () => videoElement.pause()
         })
+
+        return () => {
+            if (scrollTriggerRef.current) {
+                scrollTriggerRef.current.kill()
+                scrollTriggerRef.current = null
+            }
+            if (videoRef.current) {
+                videoRef.current.pause()
+            }
+        }
     }, {
         scope: videoWrapperRef
     })
