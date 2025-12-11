@@ -1,3 +1,6 @@
+// libraries
+import { notFound } from 'next/navigation'
+
 // components
 import Banner from '@/components/PortfolioBlocks/Banner'
 import MultiText from '@/components/PortfolioBlocks/MultiText'
@@ -9,31 +12,52 @@ import TwoMedia from '@/components/PortfolioBlocks/TwoMedia'
 import StoriesSlider from '@/components/PortfolioBlocks/StoriesSlider'
 import NextProject from '@/components/PortfolioBlocks/NextProject'
 
-export default function Project() {
+// libs
+import { getPortfolioBySlug } from '@/lib/wordpress/getPortfolioBySlug'
+import { getPortfolioList } from '@/lib/wordpress/getPortfolio'
 
-    const data = {
-        image: '/img/portfolio/banner.jpg',
-        category: 'portfolio',
-        title: 'Multilog',
-        subtitle: 'Intermodal 25',
-        text: 'Imagine um lugar onde as mentes mais brilhantes e as empresas mais inovadoras da logística na América Latina se reúnem. Esse lugar é a Intermodal South America!',
-        client: 'Multilog',
-        year: 2025,
-        area: 'Automotivo e Industrial'
+export default async function Project({
+    params
+}: {
+    params: any
+}) {
+
+    const resolved = await params
+    const slug = resolved.project
+
+    const project = await getPortfolioBySlug(slug)
+
+    if (!project) {
+        notFound()
+    }
+
+    const allProjects = await getPortfolioList()
+    const index = allProjects.findIndex(p => p.slug === slug)
+    const next = index === -1 ? null : allProjects[(index + 1) % allProjects.length]
+
+    const banner = {
+        image: project.portfolioFields.bgImage.node.mediaItemUrl,
+        category: project.portfolioCategories.nodes[0]?.name,
+        title: project.title,
+        subtitle: project.portfolioFields.subtitle,
+        text: project.portfolioFields.excerpt,
+        client: project.portfolioFields.client,
+        year: project.portfolioFields.year,
+        area: project.portfolioFields.area
     }
 
     return (
         <main className='portfolio-internal-page'>
 
             <Banner
-                image={data.image}
-                category={data.category}
-                title={data.title}
-                subtitle={data.subtitle}
-                text={data.text}
-                client={data.client}
-                year={data.year}
-                area={data.area}
+                image={banner.image}
+                category={banner.category}
+                title={banner.title}
+                subtitle={banner.subtitle}
+                text={banner.text}
+                client={banner.client}
+                year={banner.year}
+                area={banner.area}
             />
 
             <div className='bg-white pt-20 lg:pt-32 pb-px'>
@@ -226,11 +250,13 @@ export default function Project() {
 
             </div>
 
-            <NextProject
-                href='#'
-                image='/img/portfolio/03-small.jpg'
-                title='Bosch Service 2025'
-            />
+            {next && (
+                <NextProject
+                    href={`/portfolio/${next.slug}`}
+                    image={next.portfolioFields.thumbnail.node.mediaItemUrl}
+                    title={next.title}
+                />
+            )}
 
         </main>
     )

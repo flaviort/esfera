@@ -20,7 +20,7 @@ interface Props {
     subtitle: string
     text: string
     client: string
-    year: number
+    year: string
     area: string
 }
 

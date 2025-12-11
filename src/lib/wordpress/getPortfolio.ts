@@ -20,10 +20,17 @@ export type PortfolioImage = {
     }
 }
 
+export type PortfolioCategory = {
+    nodes: {
+        name: string
+    }[]
+}
+
 export type PortfolioItem = {
     id: string
     title: string
     slug: string
+    date: string
     portfolioFields: {
         area: string
         client: string
@@ -33,6 +40,7 @@ export type PortfolioItem = {
         thumbnail: PortfolioImage
         bgImage: PortfolioImage
     }
+    portfolioCategories: PortfolioCategory
 }
 
 // graphql query
@@ -70,6 +78,12 @@ const query = gql`
                         }
                     }
                 }
+                portfolioCategories {
+                    nodes {
+                        name
+                    }
+                }
+                date
             }
         }
     }
